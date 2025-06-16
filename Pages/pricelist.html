@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Price List</title>
+  <link rel="stylesheet" href="../style/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    body {
+      background: #f6fdb1; /* Background polos, sama seperti UAS, tanpa motif */
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px; /* Atur gap antar produk tanpa mengubah ukuran gambar */
+      max-width: 900px;
+      margin: 0 auto 40px auto;
+      padding: 0 10px;
+    }
+    .product-card {
+      border: 4px solid #dab627;    /* Border maroon lebih tebal */
+      border-radius: 12px;
+      background: #f7e485;
+      box-shadow: 0 2px 8px #ffd58040;
+      padding: 16px 8px 18px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .product-card:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 8px 32px rgba(185,93,16,0.16);
+    }
+    .product-card img {
+      width: 100%;
+      aspect-ratio: 3 / 4; /* atau rasio lain sesuai kebutuhan */
+      object-fit: cover;
+      border-radius: 12px;
+      background: #fff;
+      margin-bottom: 14px;
+      display: block;
+      border: none;
+      box-shadow: 0 2px 8px #ffd58080;
+      height: auto;
+      max-width: 100%; /* Pastikan gambar mengisi kolom grid */
+    }
+    .product-name {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-weight: 700;
+      color: #b95d10;
+      font-size: 1.08em;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+    .product-price {
+      color: #b95d10;
+      font-size: 1em;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    button,
+    .icon-link,
+    .kategori-btn {
+      transition: background 0.2s, color 0.2s, transform 0.1s, box-shadow 0.1s;
+    }
+
+    button:active,
+    .icon-link:active,
+    .kategori-btn:active {
+      background: #b95d10 !important;
+      color: #fffbe9 !important;
+      transform: scale(0.96);
+      box-shadow: 0 2px 8px #b95d10a0;
+    }
+
+    @media (max-width: 900px) {
+      .product-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .product-grid { grid-template-columns: 1fr; }
+      .product-card img { max-width: 90vw; }
+    }
+.button-group {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-keranjang,
+.btn-beli {
+  padding: 6px 12px;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  border: none;
+}
+
+.btn-keranjang {
+  background-color: white;
+  color: #d15400;
+  border: 2px solid #d15400;
+}
+
+.btn-beli {
+  background-color: #d15400;
+  color: white;
+}
+
+.btn-keranjang i {
+  font-size: 16px;
+}
+
+
+
+
+    /* Footer tetap di bawah */
+    .footer {
+      width: 100%;
+      /* properti lain sesuai desain */
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER/NAVIGASI SAMA PERSIS DENGAN UAS -->
+  <header class="top-bar">
+    <div class="brand">
+      <h1>Jaleela.id</h1>
+      <p>hand made with love in a beautiful island, Lombok</p>
+    </div>
+    <div class="top-icons">
+      <a href="../index.html" class="icon-link">Home</a>
+      <a href="../Pages/pricelist.html" class="icon-link">Price List</a>
+      <a href="../Pages/keranjang.html" class="icon-link">
+        <svg class="cart-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;">
+          <path d="M7 20a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm10 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm1.83-3.41l1.72-9.45A1 1 0 0 0 19.56 6H6.21l-.94-2.36A1 1 0 0 0 4.34 3H1v2h2.34l3.6 9.03-1.35 2.44A2.003 2.003 0 0 0 7 19h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45a2 2 0 0 0 1.97-1.64z" fill="#b95d10"/>
+        </svg>
+        <span style="margin-left:4px;">Keranjang</span>
+      </a>
+      <a href="https://instagram.com/jaleela.id" class="icon-link" target="_blank">Social media</a>
+    </div>
+  </header>
+
+  <!-- DAFTAR PRODUK 24 ITEM -->
+  <main>
+    <h2 class="cart-title" style="text-align:center; color:#b95d10; font-family:'Playfair Display',serif; font-size:2em; margin:40px 0 24px 0; font-weight:bold;">
+      Price List
+    </h2>
+    <!-- Kotak Search dan Kategori (kategori bisa ditekan untuk filter produk) -->
+    <div style="max-width: 1200px; margin: 0 auto 32px auto;">
+      <!-- Kotak Search -->
+      <form id="searchForm" style="width: 700px; margin: 0 auto; display: flex; align-items: center; background: #fff; border-radius: 18px; box-shadow: 0 2px 8px #ffd58080; border: 2px solid #ffd580; padding: 6px 18px;">
+        <input type="text" id="searchInput" placeholder="Cari produk..." style="border: none; outline: none; background: transparent; font-size: 1em; flex:1; color: #b95d10; font-family: 'Montserrat', Arial, sans-serif;">
+        <button type="submit" style="background: #ffd580; border: none; border-radius: 12px; padding: 6px 18px; color: #b95d10; font-weight: bold; margin-left: 8px; cursor: pointer;">Cari</button>
+      </form>
+      <!-- Kategori Produk -->
+      <div id="kategoriBar" style="display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-top: 18px;">
+        <button class="kategori-btn" data-kategori="all" style="background: #fffbe9; border: 2px solid #b95d10; color: #b95d10; border-radius: 14px; padding: 7px 24px; font-family: 'Montserrat', Arial, sans-serif; font-weight: 600; cursor: pointer; transition: background 0.2s, color 0.2s;">Semua</button>
+        <button class="kategori-btn" data-kategori="Kebaya Jaleela" style="background: #fffbe9; border: 2px solid #b95d10; color: #b95d10; border-radius: 14px; padding: 7px 24px; font-family: 'Montserrat', Arial, sans-serif; font-weight: 600; cursor: pointer; transition: background 0.2s, color 0.2s;">Kebaya Jaleela</button>
+        <button class="kategori-btn" data-kategori="Dress Jaleela" style="background: #fffbe9; border: 2px solid #b95d10; color: #b95d10; border-radius: 14px; padding: 7px 24px; font-family: 'Montserrat', Arial, sans-serif; font-weight: 600; cursor: pointer; transition: background 0.2s, color 0.2s;">Dress Jaleela</button>
+        <button class="kategori-btn" data-kategori="Kebaya Encim" style="background: #fffbe9; border: 2px solid #b95d10; color: #b95d10; border-radius: 14px; padding: 7px 24px; font-family: 'Montserrat', Arial, sans-serif; font-weight: 600; cursor: pointer; transition: background 0.2s, color 0.2s;">Kebaya Encim</button>
+      </div>
+    </div>
+    <div class="product-grid">
+      <div class="product-card" data-kategori="Dress Jaleela">
+        <img src="../Assets/dress1 (2).jpg" alt="Kebaya Encim 1"
+          class="enlarge-img"
+          data-nama="Freya Dress"
+          data-harga="Rp 230.000"
+          data-kategori="Dress Jaleela"
+          data-ukuran="All size"
+          data-warna="Hitam">
+        <div class="product-name">Freya Dress</div>
+        <div class="product-price">Rp 230.000</div>
+        <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+
+      <div class="product-card" data-kategori="Dress Jaleela">
+        <img src="../Assets/dress2 (3).jpg" alt="Dress Jaleela 2"
+          class="enlarge-img"
+          data-nama="Kayonna Dress"
+          data-harga="Rp 400.000"
+          data-kategori="Dress Jaleela"
+          data-ukuran="All size"
+          data-warna="Ungu">
+        <div class="product-name">Kayonna Dress</div>
+        <div class="product-price">Rp 400.000</div>
+       <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Dress Jaleela">
+        <img src="../Assets/dress3 (3).jpg" alt="Kebaya Jaleela 2"
+          class="enlarge-img"
+          data-nama="Humaira Dress"
+          data-harga="Rp 275.000"
+          data-kategori="Dress Jaleela"
+          data-ukuran="All size"
+          data-warna="Putih">
+        <div class="product-name">Humaira Dress</div>
+        <div class="product-price">Rp 275.000</div>
+        <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Dress Jaleela">
+        <img src="../Assets/dress4 (2).jpg" alt="Dress Jaleela 3"
+          class="enlarge-img"
+          data-nama="Alayya Dress"
+          data-harga="Rp 370.000"
+          data-kategori="Dress Jaleela"
+          data-ukuran="All size"
+          data-warna="Coklat">
+        <div class="product-name">Alayya Dress</div>
+        <div class="product-price">Rp 370.000</div>
+        <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Dress Jaleela">
+        <img src="../Assets/dress5 (2).jpg" alt="Kebaya Encim 2"
+          class="enlarge-img"
+          data-nama="Catalulla Dress"
+          data-harga="Rp 240.000"
+          data-kategori="Kebaya Encim"
+          data-ukuran="All size"
+          data-warna="Hitam">
+        <div class="product-name">Catalulla Dress</div>
+        <div class="product-price">Rp 240.000</div>
+        <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Dress Jaleela">
+        <img src="../Assets/dress6.jpg" alt="Kebaya Jaleela 3"
+          class="enlarge-img"
+          data-nama="Luihara Dress"
+          data-harga="Rp 280.000"
+          data-kategori="Dress Jaleela"
+          data-ukuran="All size"
+          data-warna="Hijau">
+        <div class="product-name">Luihara Dress</div>
+        <div class="product-price">Rp 280.000</div>
+      <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Dress Jaleela">
+        <img src="../Assets/dress7.jpg" alt="Dress Jaleela 4"
+          class="enlarge-img"
+          data-nama="Kamila Dress"
+          data-harga="Rp 420.000"
+          data-kategori="Dress Jaleela"
+          data-ukuran="All size"
+          data-warna="Coklat">
+        <div class="product-name">Kamila Dress</div>
+        <div class="product-price">Rp 420.000</div>
+      <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Dress Jaleela">
+        <img src="../Assets/dress8.jpg" alt="Kebaya Encim 3"
+          class="enlarge-img"
+          data-nama="Sanya Dress"
+          data-harga="Rp 250.000"
+          data-kategori="Dress Jaleela"
+          data-ukuran="All size"
+          data-warna="Hitam">
+        <div class="product-name">Sanya Dress</div>
+        <div class="product-price">Rp 250.000</div>
+      <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Dress Jaleela">
+        <img src="../Assets/dress99.jpg" alt="Dress Jaleela 5"
+          class="enlarge-img"
+          data-nama="Kaluela Dress"
+          data-harga="Rp 390.000"
+          data-kategori="Dress Jaleela"
+          data-ukuran="All size"
+          data-warna="Hitam">
+        <div class="product-name">Kaluela Dress</div>
+        <div class="product-price">Rp 390.000</div>
+      <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Dress Jaleela">
+        <img src="../Assets/dress10.jpg" alt="Kebaya Jaleela 4"
+          class="enlarge-img"
+          data-nama="Shanum Dress"
+          data-harga="Rp 260.000"
+          data-kategori="Dress Jaleela"
+          data-ukuran="All size"
+          data-warna="Krem">
+        <div class="product-name">Shanum Dress</div>
+        <div class="product-price">Rp 260.000</div>
+      <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Dress Jaleela">
+        <img src="../Assets/dress11.jpg" alt="Dress Jaleela 6"
+          class="enlarge-img"
+          data-nama="Ambriella Dress"
+          data-harga="Rp 310.000"
+          data-kategori="Dress Jaleela"
+          data-ukuran="All size"
+          data-warna="Maroon">
+        <div class="product-name">Ambriella Dress</div>
+        <div class="product-price">Rp 310.000</div>
+      <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Kebaya Jaleela">
+        <img src="../Assets/kebaya1.jpg" alt="Kebaya Encim 4"
+          class="enlarge-img"
+          data-nama="Mecca Kebaya"
+          data-harga="Rp 245.000"
+          data-kategori="Kebaya Jaleela"
+          data-ukuran="M"
+          data-warna="Maroon">
+        <div class="product-name">Mecca Kebaya</div>
+        <div class="product-price">Rp 245.000</div>
+      <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Kebaya Jaleela">
+        <img src="../Assets/kebaya2.jpg" alt="Kebaya Jaleela 5"
+          class="enlarge-img"
+          data-nama="Malayya Kebaya"
+          data-harga="Rp 295.000"
+          data-kategori="Kebaya Jaleela"
+          data-ukuran="M"
+          data-warna="Coklat hijau">
+        <div class="product-name">Malayya Kebaya</div>
+        <div class="product-price">Rp 295.000</div>
+      <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Kebaya Jaleela">
+        <img src="../Assets/kebaya3.jpg" alt="Dress Jaleela 7"
+          class="enlarge-img"
+          data-nama="Aurorrae Kebaya"
+          data-harga="Rp 330.000"
+          data-kategori="Kebaya Jaleela"
+          data-ukuran="M"
+          data-warna="Putih">
+        <div class="product-name">Aurorrae Kebaya</div>
+        <div class="product-price">Rp 330.000</div>
+      <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-cart-shopping"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Kebaya Jaleela">
+        <img src="../Assets/kebaya4.jpg" alt="Kebaya Encim 5"
+          class="enlarge-img"
+          data-nama="Arisha Kebaya"
+          data-harga="Rp 255.000"
+          data-kategori="Kebaya Jaleela"
+          data-ukuran="M"
+          data-warna="Abu">
+        <div class="product-name">Arisha Kebaya</div>
+        <div class="product-price">Rp 255.000</div>
+      <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Kebaya Jaleela">
+        <img src="../Assets/kebaya5.jpg" alt="Dress Jaleela 8"
+          class="enlarge-img"
+          data-nama="Arrawinda Kebaya"
+          data-harga="Rp 410.000"
+          data-kategori="Kebaya Jaleela"
+          data-ukuran="M"
+          data-warna="coklat">
+        <div class="product-name">Arrawinda Kebaya</div>
+        <div class="product-price">Rp 410.000</div>
+      <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Kebaya Jaleela">
+        <img src="../Assets/kebaya6.jpg" alt="Kebaya Jaleela 6"
+          class="enlarge-img"
+          data-nama="Arabella Kebaya"
+          data-harga="Rp 280.000"
+          data-kategori="Kebaya Jaleela"
+          data-ukuran="M"
+          data-warna="Pink muda">
+        <div class="product-name">Arabella Kebaya</div>
+        <div class="product-price">Rp 280.000</div>
+      <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Kebaya Jaleela">
+        <img src="../Assets/kebaya7.jpg" alt="Kebaya Encim 6"
+          class="enlarge-img"
+          data-nama="Angelinaa Kebaya"
+          data-harga="Rp 275.000"
+          data-kategori="Kebaya Jaleela"
+          data-ukuran="M"
+          data-warna="Ungu">
+        <div class="product-name">Angelinaa Kebaya</div>
+        <div class="product-price">Rp 275.000</div>
+      <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Kebaya Jaleela">
+        <img src="../Assets/kebaya8.jpg" alt="Kebaya Encim 6"
+          class="enlarge-img"
+          data-nama="Avaa Kebaya"
+          data-harga="Rp 275.000"
+          data-kategori="Kebaya Jaleela"
+          data-ukuran="M"
+          data-warna="Hitam">
+        <div class="product-name">Avaa Kebaya</div>
+        <div class="product-price">Rp 275.000</div>
+      <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Kebaya Jaleela">
+        <img src="../Assets/kebaya9.jpg" alt="Kebaya Encim 6"
+          class="enlarge-img"
+          data-nama="Anindita Kebaya"
+          data-harga="Rp 275.000"
+          data-kategori="Kebaya Jaleela"
+          data-ukuran="M"
+          data-warna="burgundy">
+        <div class="product-name">Anindita Kebaya</div>
+        <div class="product-price">Rp 275.000</div>
+      <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Kebaya Encim">
+        <img src="../Assets/encim1.jpg" alt="Kebaya Encim 6"
+          class="enlarge-img"
+          data-nama="Beatrice Encim"
+          data-harga="Rp 275.000"
+          data-kategori="Kebaya Encim"
+          data-ukuran="S"
+          data-warna="Kuning">
+        <div class="product-name">Beatrice Encim</div>
+        <div class="product-price">Rp 275.000</div>
+      <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Kebaya Encim">
+        <img src="../Assets/encim2.jpg" alt="Kebaya Encim 6"
+          class="enlarge-img"
+          data-nama="Blair Encim"
+          data-harga="Rp 275.000"
+          data-kategori="Kebaya Encim"
+          data-ukuran="S"
+          data-warna="Pink">
+        <div class="product-name">Blair Encim</div>
+        <div class="product-price">Rp 275.000</div>
+      <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Kebaya Encim">
+        <img src="../Assets/encim3.jpg" alt="Kebaya Encim 6"
+          class="enlarge-img"
+          data-nama="Brenda  Encim"
+          data-harga="Rp 275.000"
+          data-kategori="Kebaya Encim"
+          data-ukuran="S"
+          data-warna="Hitam">
+        <div class="product-name">Brenda  Encim</div>
+        <div class="product-price">Rp 275.000</div>
+      <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Kebaya Encim">
+        <img src="../Assets/encim4.jpg" alt="Kebaya Encim 6"
+          class="enlarge-img"
+          data-nama="Sekar Encim"
+          data-harga="Rp 275.000"
+          data-kategori="Kebaya Encim"
+          data-ukuran="S"
+          data-warna="Krem">
+        <div class="product-name">Sekar Encim</div>
+        <div class="product-price">Rp 275.000</div>
+      <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Kebaya Encim">
+        <img src="../Assets/encim5 (2).jpg" alt="Kebaya Encim 6"
+          class="enlarge-img"
+          data-nama="Callandra Encim"
+          data-harga="Rp 275.000"
+          data-kategori="Kebaya Encim"
+          data-ukuran="S"
+          data-warna="Pink muda">
+        <div class="product-name">Callandra Encim</div>
+        <div class="product-price">Rp 275.000</div>
+      <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Kebaya Encim">
+        <img src="../Assets/encim6.jpg" alt="Kebaya Encim 6"
+          class="enlarge-img"
+          data-nama="Elea Encim"
+          data-harga="Rp 275.000"
+          data-kategori="Kebaya Encim"
+          data-ukuran="S"
+          data-warna="Tosca">
+        <div class="product-name">Elea Encim</div>
+        <div class="product-price">Rp 275.000</div>
+      <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+      <div class="product-card" data-kategori="Kebaya Encim">
+        <img src="../Assets/encim7.jpg" alt="Kebaya Encim 6"
+          class="enlarge-img"
+          data-nama="Carissa Encim"
+          data-harga="Rp 275.000"
+          data-kategori="Kebaya Encim"
+          data-ukuran="S"
+          data-warna="Oren">
+        <div class="product-name">Carissa Encim</div>
+        <div class="product-price">Rp 275.000</div>
+      <div class="button-group">
+      <button class="btn-keranjang"><i class="fas fa-shopping-cart"></i></button>
+      <button class="btn-beli">Beli</button>
+    </div>
+  </div>
+    </div>
+    <!-- Tambahkan elemen ini di bawah grid produk -->
+    <div id="notFoundMsg" style="display:none; text-align:center; color:#b95d10; font-family:'Montserrat',Arial,sans-serif; margin:32px 0; font-size:1.1em;">
+      produk tidak ditemukan, gunakan kata kunci berbeda
+    </div>
+    <div id="imgModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); align-items:center; justify-content:center;">
+      <div style="background:#fffbe9; border-radius:16px; padding:24px 18px 18px 18px; max-width:90vw; max-height:90vh; box-shadow:0 4px 24px rgba(0,0,0,0.15); position:relative; text-align:center;">
+        <span id="closeModal" style="position:absolute; top:10px; right:18px; font-size:2em; color:#b95d10; cursor:pointer;">&times;</span>
+        <img id="modalImg" src="" alt="" style="max-width:60vw; max-height:50vh; border-radius:10px; margin-bottom:18px; display:block; margin-left:auto; margin-right:auto;">
+        <div id="modalDesc" style="color:#800000; font-size:1.1em; margin-top:8px; text-align:left; max-width:400px; margin:auto;">
+          <ul style="list-style:none; padding:0; margin:0;">
+            <li>
+              <b>Nama:</b>
+              <span id="descNama" style="font-family:'Montserrat',Arial,sans-serif; font-size:1.1em; color:#b95d10;"></span>
+            </li>
+            <li>
+              <b>Harga:</b>
+              <span id="descHarga" style="font-family:'Montserrat',Arial,sans-serif; font-size:1.1em; color:#b95d10;"></span>
+            </li>
+            <li><b>Kategori:</b> <span id="descKategori"></span></li>
+            <li><b>Ukuran:</b> <span id="descUkuran"></span></li>
+            <li><b>Warna:</b> <span id="descWarna"></span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+   
+
+  <!-- FOOTER SAMA PERSIS DENGAN UAS -->
+  <footer class="footer">
+    <div class="footer-left">
+      <h3>Ulasan pelanggan</h3>
+    </div>
+    <div class="footer-center">
+      <p><strong>Our Ofline Store</strong></p>
+      <p>Lombok Epicentrum Mall<br>LEM (lantai 1), Jl. Sriwijaya No.383, Kota Mataram, 83127<br>
+      Buka : Senin - Jumat, 08.00 - 22.00</p>
+    </div>
+    <div class="footer-right">
+      <h3>About Us</h3>
+    </div>
+  </footer>
+  <script>
+const searchInput = document.getElementById('searchInput');
+const searchForm = document.getElementById('searchForm');
+const kategoriBtns = document.querySelectorAll('.kategori-btn');
+const notFoundMsg = document.getElementById('notFoundMsg');
+
+function filterProducts() {
+  const keyword = searchInput.value.toLowerCase();
+  const kategoriAktif = document.querySelector('.kategori-btn.active');
+  const kategori = kategoriAktif ? kategoriAktif.getAttribute('data-kategori') : "all";
+  let found = false;
+  document.querySelectorAll('.product-card').forEach(function(card) {
+    const name = card.querySelector('.product-name').textContent.toLowerCase();
+    const kategoriProduk = card.getAttribute('data-kategori');
+    const cocokKategori = (kategori === "all") || (kategoriProduk === kategori);
+    const cocokNama = name.includes(keyword) || keyword === "";
+    if (cocokKategori && cocokNama) {
+      card.style.display = "";
+      found = true;
+    } else {
+      card.style.display = "none";
+    }
+  });
+  document.getElementById('notFoundMsg').style.display = found ? "none" : "";
+}
+
+// Otomatis filter saat mengetik
+searchInput.addEventListener('input', filterProducts);
+
+// Tombol cari tetap bisa ditekan
+searchForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  filterProducts();
+});
+
+// Kategori filter
+kategoriBtns.forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    kategoriBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filterProducts();
+  });
+});
+
+// Set default kategori "Semua" aktif
+document.querySelector('.kategori-btn[data-kategori="all"]').classList.add('active');
+
+// Modal gambar
+document.querySelectorAll('.product-card img').forEach(img => {
+  img.addEventListener('click', function() {
+    const modal = document.getElementById('imgModal');
+    const modalImg = document.getElementById('modalImg');
+    const descNama = document.getElementById('descNama');
+    const descHarga = document.getElementById('descHarga');
+    const descKategori = document.getElementById('descKategori');
+    const descUkuran = document.getElementById('descUkuran');
+    const descWarna = document.getElementById('descWarna');
+
+    // Set data ke elemen modal
+    modalImg.src = this.src;
+    descNama.textContent = this.parentElement.querySelector('.product-name').textContent;
+    descHarga.textContent = this.parentElement.querySelector('.product-price').textContent;
+    descKategori.textContent = this.getAttribute('data-kategori');
+    descUkuran.textContent = this.getAttribute('data-ukuran');
+    descWarna.textContent = this.getAttribute('data-warna');
+
+    // Tampilkan modal
+    modal.style.display = 'flex';
+  });
+});
+
+// Tutup modal saat klik tombol tutup
+document.getElementById('closeModal').addEventListener('click', function() {
+  document.getElementById('imgModal').style.display = 'none';
+});
+
+// Tutup modal saat klik di luar gambar
+window.addEventListener('click', function(event) {
+  const modal = document.getElementById('imgModal');
+  if (event.target === modal) {
+    modal.style.display = 'none';
+  }
+});
+
+document.querySelectorAll('.enlarge-img').forEach(function(img) {
+  img.style.cursor = "zoom-in";
+  img.addEventListener('click', function() {
+    document.getElementById('modalImg').src = img.src;
+    document.getElementById('descNama').textContent = img.getAttribute('data-nama') || '';
+    document.getElementById('descHarga').textContent = img.getAttribute('data-harga') || '';
+    document.getElementById('descKategori').textContent = img.getAttribute('data-kategori') || '';
+    document.getElementById('descUkuran').textContent = img.getAttribute('data-ukuran') || '';
+    document.getElementById('descWarna').textContent = img.getAttribute('data-warna') || '';
+    document.getElementById('imgModal').style.display = "flex";
+  });
+});
+document.getElementById('closeModal').onclick = function() {
+  document.getElementById('imgModal').style.display = "none";
+};
+document.getElementById('imgModal').onclick = function(e) {
+  if (e.target === this) this.style.display = "none";
+};
+document.getElementById('formProduk').onsubmit = function(e) {
+  e.preventDefault();
+  const nama = document.getElementById('namaProduk').value;
+  const harga = document.getElementById('hargaProduk').value;
+  const kategori = document.getElementById('kategoriProduk').value;
+  const ukuran = document.getElementById('ukuranProduk').value;
+  const warna = document.getElementById('warnaProduk').value;
+  document.getElementById('hasilProduk').innerHTML =
+    `<div style="background:#fff; border-radius:8px; padding:16px; margin-top:12px; border:1px solid #ffd580;">
+      <b>Nama:</b> ${nama}<br>
+      <b>Harga:</b> ${harga}<br>
+      <b>Kategori:</b> ${kategori}<br>
+      <b>Ukuran:</b> ${ukuran}<br>
+      <b>Warna:</b> ${warna}
+    </div>`;
+  this.reset();
+};
+</script>
+<script>
+  // ...existing code...
+function tambahKeKeranjang(nama, harga, gambar, autoChecked = false) {
+  let keranjang = JSON.parse(localStorage.getItem('keranjang')) || [];
+  let idx = keranjang.findIndex(item => item.nama === nama && item.gambar === gambar);
+  if (idx !== -1) {
+    if (autoChecked) keranjang[idx].autoChecked = true;
+    // Tidak menambah jumlah jika autoChecked
+  } else {
+    keranjang.push({ nama, harga, gambar, jumlah: 1, autoChecked });
+  }
+  localStorage.setItem('keranjang', JSON.stringify(keranjang));
+}
+
+// Event listener untuk semua tombol keranjang
+document.querySelectorAll('.btn-beli').forEach(function(btn) {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    const card = btn.closest('.product-card');
+    const nama = card.querySelector('.product-name').textContent;
+    const harga = card.querySelector('.product-price').textContent;
+    const gambar = card.querySelector('img').getAttribute('src');
+    tambahKeKeranjang(nama, harga, gambar, true);
+    window.location.href = "keranjang.html";
+  });
+});
+
+document.querySelectorAll('.btn-keranjang').forEach(function(btn) {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    const card = btn.closest('.product-card');
+    const nama = card.querySelector('.product-name').textContent;
+    const harga = card.querySelector('.product-price').textContent;
+    const gambar = card.querySelector('img').getAttribute('src');
+    tambahKeKeranjang(nama, harga, gambar);
+    alert(nama + " berhasil dimasukkan ke keranjang!");
+  });
+});
+</script>
+</body>
+</html>

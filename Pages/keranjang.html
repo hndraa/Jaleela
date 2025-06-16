@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Keranjang</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      background: #f6fdb1;
+    }
+    body, .top-bar, .top-icons, .icon-link, .brand, .cart-title, .footer, .footer-content {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 1em;
+      box-sizing: border-box;
+    }
+    .top-bar {
+      background-color: #ba600d;
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .top-bar h1 {
+      margin: 0;
+    }
+    .top-icons a {
+      background-color: #ffd480;
+      border-radius: 25px;
+      padding: 10px 20px;
+      margin-left: 10px;
+      text-decoration: none;
+      color: #ba600d;
+      font-weight: bold;
+    }
+    .brand {
+      margin-left: 12px;      /* Jarak kecil ke kanan logo */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .brand h1 {
+  margin-left: 0;
+  margin-bottom: 2px;
+  font-weight: bold;
+  font-style: normal;      /* Hapus italic */
+  font-size: 2em;        /* Samakan ukuran jika perlu */
+  letter-spacing: normal;
+  font-family: 'Playfair Display', serif; /* Pastikan sama */
+  color: #fcfbfa;
+}
+
+.brand p {
+  margin: 0;
+  font-size: 1em;
+  color: #fcfbfa;
+  font-style: italic;
+  margin-left: 0;
+  margin-top: 0;        /* pastikan tidak ada jarak atas */
+}
+.top-icons {
+  display: flex;
+  align-items: center;
+}
+
+.top-icons .icon-link {
+  margin-left: 15px;
+  font-size: 0.93em;      /* Font lebih kecil */
+  padding: 7px 16px;
+  border-radius: 18px;
+  text-decoration: none;
+  color: #b95d10;
+  background: linear-gradient(90deg, #ffd580 0%, #ffe9b3 100%);
+  border: 1.5px solid #b95d10;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+  box-shadow: 0 2px 8px rgba(185,93,16,0.08);
+  cursor: pointer;
+}
+
+.top-icons .icon-link:hover {
+  background: #b95d10;
+  color: #fffbe9;
+  border-color: #b95d10;
+}
+
+.top-icons .icon-link:active {
+  border-color: #fff !important;
+}
+
+.top-icons .icon-link:first-child {
+  margin-left: 0;
+}
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+      padding: 10px;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .product-card {
+      background: #f7e485;
+      padding: 10px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .product-card img {
+      /* max-width: 100%;
+      border-radius: 8px;
+      aspect-ratio: 3 / 4;
+      height: auto; */
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: 12px;
+      background: #fff;
+      margin-bottom: 14px;
+      display: block;
+      border: none;
+      box-shadow: 0 2px 8px #ffd58080;
+      height: auto;
+      max-width: 100%;
+    }
+    .product-name {
+      font-weight: bold;
+      margin-top: 10px;
+      color: #b95d10;
+    }
+    .product-price {
+      color: #b95d10;
+      margin: 5px 0;
+    }
+    .btn-beli {
+      background-color: #d15400;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button,
+    .icon-link,
+    .kategori-btn {
+      transition: background 0.2s, color 0.2s, transform 0.1s, box-shadow 0.1s;
+    }
+
+    button:active,
+    .icon-link:active,
+    .kategori-btn:active {
+      background: #b95d10 !important;
+      color: #fffbe9 !important;
+      transform: scale(0.96);
+      box-shadow: 0 2px 1px #b95d10a0;
+    }
+  </style>
+</head>
+<body>
+  <header class="top-bar">
+    <div class="brand">
+      <h1>Jaleela.id</h1>
+      <p>hand made with love in a beautiful island, Lombok</p>
+    </div>
+    <div class="top-icons">
+      <a href="../index.html" class="icon-link">Home</a>
+      <a href="pricelist.html" class="icon-link">Price List</a>
+      <a href="https://instagram.com/jaleela.id" class="icon-link">Social media</a>
+    </div>
+  </header>
+<main>
+  <div class="product-grid" id="keranjangList">
+    <!-- Produk dari keranjang akan muncul di sini -->
+  </div>
+<script>
+let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
+let selected = {};
+function simpanKeranjang() {
+  localStorage.setItem("keranjang", JSON.stringify(keranjang));
+}
+function simpanSelected() {
+  localStorage.setItem("selectedKeranjang", JSON.stringify(selected));
+}
+function loadSelected() {
+  selected = JSON.parse(localStorage.getItem("selectedKeranjang")) || {};
+}
+
+function tampilkanKeranjang() {
+  keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
+  loadSelected();
+  const keranjangList = document.getElementById("keranjangList");
+  keranjangList.innerHTML = "";
+
+  if (keranjang.length === 0) {
+    keranjangList.innerHTML = "<div style='grid-column: 1/-1; text-align:center; color:#b95d10;'>Keranjang kosong.</div>";
+    document.getElementById("checkoutSection")?.remove();
+    return;
+  }
+
+  keranjang.forEach(function(item, idx) {
+    if (!item.jumlah) item.jumlah = 1;
+    if (item.autoChecked) {
+      selected[idx] = { checked: true, jumlah: item.jumlah };
+  
+      delete item.autoChecked;
+      simpanKeranjang();
+      simpanSelected(); // <-- tambahkan baris ini agar status terjaga setelah reload
+    }
+    const checked = selected[idx]?.checked ? "checked" : "";
+    keranjangList.innerHTML += `
+      <div class="product-card" data-idx="${idx}">
+        <img src="${item.gambar}" alt="${item.nama}">
+        <div class="product-name">${item.nama}</div>
+        <div class="product-price">${item.harga}</div>
+        <div style="margin:8px 0;">
+          <button onclick="ubahJumlah(${idx}, -1)" style="padding:2px 10px;">-</button>
+          <span id="jumlah-${idx}" style="margin:0 10px;">${item.jumlah}</span>
+          <button onclick="ubahJumlah(${idx}, 1)" style="padding:2px 10px;">+</button>
+        </div>
+        <div>
+          <input type="checkbox" id="pilih-${idx}" onchange="togglePilih(${idx})" ${checked}>
+          <label for="pilih-${idx}">Pilih</label>
+          <button class="btn-beli" onclick="hapusDariKeranjang(${idx})" style="margin-left:10px;">Hapus</button>
+        </div>
+      </div>
+    `;
+  });
+
+  renderCheckoutSection();
+}
+
+function ubahJumlah(idx, delta) {
+  if (!keranjang[idx]) return;
+  const jumlahBaru = (keranjang[idx].jumlah || 1) + delta;
+  if (jumlahBaru < 1) {
+    hapusDariKeranjang(idx);
+  } else {
+    keranjang[idx].jumlah = jumlahBaru;
+    simpanKeranjang();
+    tampilkanKeranjang();
+  }
+}
+
+function togglePilih(idx) {
+  if (!selected[idx]) selected[idx] = { checked: false, jumlah: 1 };
+  selected[idx].checked = !selected[idx].checked;
+  selected[idx].jumlah = keranjang[idx]?.jumlah || 1;
+  simpanSelected();
+  renderCheckoutSection();
+}
+
+function hapusDariKeranjang(index) {
+  keranjang.splice(index, 1);
+  simpanKeranjang();
+  delete selected[index];
+  simpanSelected();
+  tampilkanKeranjang();
+}
+
+function renderCheckoutSection() {
+  document.getElementById("checkoutSection")?.remove();
+  const checkedIdx = Object.keys(selected).filter(i => selected[i]?.checked);
+  if (checkedIdx.length === 0) return;
+
+  let total = 0;
+  checkedIdx.forEach(i => {
+    const item = keranjang[i];
+    if (item) {
+      const harga = parseInt(item.harga.replace(/[^0-9]/g, ""));
+      total += harga * (item.jumlah || 1);
+    }
+  });
+
+  const section = document.createElement("div");
+  section.id = "checkoutSection";
+  section.style = "max-width:1000px;margin:30px auto 0 auto;padding:20px;background:#fffbe9;border-radius:12px;box-shadow:0 2px 8px #ffd58080;text-align:center;";
+  section.innerHTML = `
+    <div style="font-weight:bold;color:#b95d10;margin-bottom:10px;">Total: Rp ${total.toLocaleString("id-ID")}</div>
+    <button id="checkoutBtn" style="background:#d15400;color:#fff;padding:10px 30px;border:none;border-radius:8px;font-size:1.1em;cursor:pointer;">Checkout</button>
+  `;
+  section.querySelector("#checkoutBtn").onclick = function() {
+    checkout(checkedIdx, total);
+  };
+  document.body.appendChild(section);
+}
+
+function checkout(checkedIdx, total) {
+  // Simpan data checkout ke sessionStorage untuk halaman pembayaran
+  const barangCheckout = checkedIdx.map(i => ({
+    ...keranjang[i],
+    jumlah: keranjang[i].jumlah || 1
+  }));
+  sessionStorage.setItem("checkoutBarang", JSON.stringify(barangCheckout));
+  sessionStorage.setItem("checkoutTotal", total);
+
+  // Hapus barang yang di-checkout dari keranjang
+  keranjang = keranjang.filter((_, idx) => !checkedIdx.includes(idx.toString()));
+  simpanKeranjang();
+  selected = {};
+  simpanSelected();
+  window.location.href = "pembayaran.html";
+}
+
+// Tampilkan keranjang saat halaman dimuat
+window.onload = tampilkanKeranjang;
+
+// Agar fungsi bisa dipanggil dari HTML
+window.ubahJumlah = ubahJumlah;
+window.togglePilih = togglePilih;
+window.hapusDariKeranjang = hapusDariKeranjang;
+</script>
+
+</body>
+</html>

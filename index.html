@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jaleela.id</title>
+  <link rel="stylesheet" href="style/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="top-bar">
+    <!-- Logo Jaleela dihapus -->
+    <div class="brand">
+      <h1>Jaleela.id</h1>
+      <p>hand made with love in a beautiful island, Lombok</p>
+    </div>
+    <div class="top-icons">
+      <a href="index.html" class="icon-link">Home</a>
+      <a href="Pages/pricelist.html" class="icon-link">Price List</a>
+      <a href="Pages/keranjang.html" class="icon-link">
+        <svg class="cart-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" style="vertical-align:middle;">
+          <path d="M7 20a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm10 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm1.83-3.41l1.72-9.45A1 1 0 0 0 19.56 6H6.21l-.94-2.36A1 1 0 0 0 4.34 3H1v2h2.34l3.6 9.03-1.35 2.44A2.003 2.003 0 0 0 7 19h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45a2 2 0 0 0 1.97-1.64z" fill="#b95d10"/>
+        </svg>
+        <span style="margin-left:4px;">Keranjang</span>
+      </a>
+      <a href="https://instagram.com/jaleela.id" class="icon-link" target="_blank">Social media</a>
+    </div>
+  </header>
+
+  <section class="main-content">
+    <aside class="best-seller">
+      <h2>Our best seller</h2>
+      <div class="product">
+        <img src="Assets/produk1.jpg" alt="Produk 1">
+        <p><em>Kayonna Dress</em></p>
+      </div>
+      <div class="product">
+        <img src="Assets/produk2.jpg" alt="Produk 2">
+        <p><em>Mecca Kebaya</em></p>
+      </div>
+    </aside>
+
+    <div class="models">
+      <img src="Assets/gt1.jpg" alt="Model Showcase">
+    </div>
+
+    <article class="description">
+      <p>
+        Jaleela adalah salah satu produk dengan keindahan budaya yang dipadukan dengan keanggunan gaya kontemporer.
+        Terinspirasi dari kekayaan warisan Nusantara, setiap helai kebaya Jaleela dirancang untuk menghormati tradisi yang tetap relevan dengan gaya hidup perempuan masa kini.
+        <button class="read-more-btn" onclick="toggleReadMore()">Read More</button>
+      </p>
+      <div id="more-text" style="display:none;">
+        <p>
+          Jaleela Kebaya hadir sebagai pernyataan identitas. Potongannya disesuaikan untuk memberikan efek ramping dan anggun, menonjolkan keindahan tubuh perempuan tanpa menghilangkan kesan sopan dan berkelas.
+        </p>
+        <!-- Tambahkan paragraf baru di sini jika ingin -->
+        <button class="read-less-btn" onclick="toggleReadMore()" style="margin-top:10px;">Read Less</button>
+      </div>
+      <p class="hashtags">
+        #JaleelaID #TimelessFashion #GlamKebaya
+      </p>
+    </article>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-left">
+      <h3>Ulasan pelanggan</h3>
+    </div>
+    <div class="footer-center">
+      <p><strong>Our Ofline Store</strong></p>
+      <p>Lombok Epicentrum Mall<br>LEM (lantai 1), Jl. Sriwijaya No.383, Kota Mataram, 83127<br>
+      Buka : Senin - Jumat, 08.00 - 22.00</p>
+    </div>
+    <div class="footer-right">
+      <h3>About Us</h3>
+    </div>
+  </footer>
+
+  <script>
+const modelImages = [
+  "Assets/gt1.jpg",
+  "Assets/gt2.jpg",
+  "Assets/gt3.jpg",
+  "Assets/gt4.jpg",
+  "Assets/gt5.jpg"
+];
+let modelIndex = 0;
+const modelImg = document.querySelector('.models img');
+
+function showNextModel() {
+  modelIndex = (modelIndex + 1) % modelImages.length;
+  modelImg.src = modelImages[modelIndex];
+}
+setInterval(showNextModel, 5000); // Ganti gambar tiap 5 detik
+
+function toggleReadMore() {
+  var moreText = document.getElementById("more-text");
+  var btn = document.querySelector(".read-more-btn");
+  if (moreText.style.display === "none") {
+    moreText.style.display = "block";
+    btn.style.display = "none"; // Sembunyikan Read More saat teks tambahan muncul
+  } else {
+    moreText.style.display = "none";
+    btn.style.display = "inline"; // Tampilkan Read More lagi saat teks tambahan disembunyikan
+  }
+}
+  </script>
+</body>
+</html>
